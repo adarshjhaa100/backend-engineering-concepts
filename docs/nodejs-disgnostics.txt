@@ -1,0 +1,3 @@
+node --inspect-brk command
+
+visit: chrome://inspect/#devices

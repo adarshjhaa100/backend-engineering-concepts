@@ -81,5 +81,5 @@ const server = http.createServer((req, res) => {
 
 const PORT = 8082
 server.listen(8082, () => {
-    console.log(`Listening on ${8082} ...`)
+    console.log(`Listening on ${PORT} ...`)
 });
