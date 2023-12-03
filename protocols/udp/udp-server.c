@@ -6,23 +6,35 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <threads.h>
+#include <unistd.h>
 
-void errorMessage(const char* message){
+void error_message(const char* message){
     fprintf(stderr, "%s", message);
 }
 
+// int create_udp_socket(){
+
+
+
+// }
+
 int main()
-{
+{   
+
+    
     int fd;
     socklen_t namelen;
 
     struct sockaddr_in server, client;
 
+    printf("\nGETPID: %d, GETPPID: %d\n", getpid(), getppid());
+
 
     /* Create (datagram socket) in (Internet domain) and use default UDP 
     protocol */   
     if((fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0){
-        errorMessage("socket()");
+        error_message("socket()");
         exit(1);
     }
 
@@ -30,7 +42,7 @@ int main()
 
     /* Init DS for server. Listening Port, IP Address to listen to from 
     network interface, Address Family */
-    server.sin_addr.s_addr = INADDR_ANY; // IF want a static IP, make it like: inet_addr("127.0.0.1")
+    server.sin_addr.s_addr = INADDR_ANY; //Note: Make this a fixed address when in production. IF want a static IP, make it like: inet_addr("127.0.0.1")
     server.sin_family = AF_INET;
     server.sin_port = 0;                 // Dynamically allocate a port
 
@@ -39,7 +51,7 @@ int main()
     OS to demux messages to correct server */
     if ( bind(fd, (struct sockaddr *)&server, sizeof(server)) < 0 )
     {
-        errorMessage("bind()");
+        error_message("bind()");
         exit(2);
     }
 
@@ -49,7 +61,7 @@ int main()
     printf("\nnamelen: %d, filedesc: %d\n", namelen, fd);
     if(getsockname(fd, (struct sockaddr *)&server, &namelen) < 0)
     {
-        errorMessage("getsockname()");
+        error_message("getsockname()");
         exit(3);
     }
     char server_address[100];
@@ -71,7 +83,7 @@ int main()
     {
         if(recvfrom(fd, buff, sizeof(buff), 0, (struct sockaddr *)&client, &client_adr_len) < 0)
         {
-            errorMessage("\nrecvfrom()\n");
+            error_message("\nrecvfrom()\n");
             exit(4);
         }
 
@@ -90,7 +102,7 @@ int main()
 
     if(close(fd) < 0)
     {
-        errorMessage("\nclose()\n");
+        error_message("\nclose()\n");
         exit(5);
     }
 

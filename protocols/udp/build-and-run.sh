@@ -1,2 +1,3 @@
-gcc udp-server.c -o udp-server -pedantic -Wall -Wextra -Wwrite-strings -g3\
+gcc udp-server.c -pedantic -Wall -Wextra -Wwrite-strings -g3 \
+-o udp-server \
 && ./udp-server
