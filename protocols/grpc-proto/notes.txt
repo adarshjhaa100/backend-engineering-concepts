@@ -1,0 +1,7 @@
+Echo server example in JS: 
+https://github.com/grpc/grpc-web/tree/master/net/grpc/gateway/examples/echo
+
+Protobuf: https://protobuf.dev/programming-guides/proto3/
+
+
+We have examples using compiled proto file. But here, we'll do it without those

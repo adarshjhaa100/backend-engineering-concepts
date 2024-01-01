@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+
+package employeePackage; 
+
+
+
+    message Address {
+        required string  text = 1;
+        required int32 areaCode = 2;
+    }
+
+
+// Messages: Analogous to Types in other langs
+message EmployeeType {
+    int32 id = 1; // Unique tag for this specific field
+    string name = 2; 
+
+    // Composite types
+    required Address address=3;
+
+    // for a list
+    repeated string daysOff  = 4;
+}
+
+
+message Employees {
+    repeated EmployeeType employeeEntity = 1;
+}
+
+message noType{
+
+}
+
+
+// Defining rpc service
+service EmployeeService {
+
+    rpc addEmployee(EmployeeType) returns (EmployeeType);
+
+    rpc getEmployees(noType) returns (Employees); // this sends all at once, not good for large responses
+
+    // Server streaming
+    rpc getEmployeesStream(noType) returns (stream Employees); // stream employees. Consume through event
+
+}
+
+
+
+
+
+
+
+
